@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="saveProduct($event)">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Producto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>ID</mat-label>
+                        <input formControlName="id" matInput type="text" placeholder="Ingrese un id unico">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>TITULO</mat-label>
+                        <input formControlName="title" matInput type="text" placeholder="Ingrese nombre del producto">
+                    </mat-form-field>
+                </div>
+            </div>
+            <label><strong>IMAGEN</strong></label>
+            <div class="row">
+                <div class="col-xs">
+                    <img *ngIf="(imageUrl$ | async) as img" [src]="img">
+                    <input formControlName="image" class="image" type="file" (change)="uploadFile($event)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>PRECIO</mat-label>
+                        <input formControlName="price" matInput type="number" placeholder="0">
+                    </mat-form-field>
+                    <mat-error *ngIf="priceField!.hasError('price_invalid')">Valor de producto muy elevado</mat-error>
+                    <mat-error *ngIf="priceField!.hasError('required')">El campo es requerido</mat-error>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>DESCRIPCIÓN</mat-label>
+                        <textarea formControlName="description" matInput type="text" placeholder="Describa su producto"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Crear producto</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

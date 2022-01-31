@@ -1,0 +1,40 @@
+<app-banner-contact></app-banner-contact>
+
+<div class="info-container">
+    <h2>Si tienes alguna duda contáctanos</h2>
+
+    <p>
+        Somos <strong>Pulimentos de Honduras</strong> una empresa dedicada a la venta de productos para dar,    revivir y mantener el brillo de metales, con una gran variedad de productos no dudes en consultar con  nosotros.
+    </p>
+
+    <p>
+        si deseas mas informacion no dudes en enviarnos un mensaje, con gusto te atenderemos. Trataremos de         responderte lo mas antes posible, si tienes problemas al enviar el mensaje puedes contactarnos por estos    otros  medios y asi facilitar tus dudas mas rapido:
+    </p>
+    <ul>
+        <li><strong>Direccion:</strong> Col. La Sabana 7 calle SE, 24 y 25 avenida, San Pedro Sula, Honduras</li>
+        <li><strong>Telefono:</strong> +504 9965-2464</li>
+        <li><strong>Email:</strong> kburgoschi@gmail.com</li>
+    </ul>
+</div>
+
+<form class="container">
+    <mat-form-field class="mat-form-container" appearance="outline" color="accent">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="emailField" [errorStateMatcher]="matcher" placeholder="Ej. pat@ejemplo.com">
+        <mat-error *ngIf="emailField.hasError('email') && !emailField.hasError('required')">
+            Porfavor ingrese un correo valido
+        </mat-error>
+        <mat-error *ngIf="emailField.hasError('required')">
+            Correo electronico es <strong>requerido</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mat-form-container" appearance="outline" color="accent">
+        <mat-label>Asunto</mat-label>
+        <input type="text" matInput placeholder="Ej. Orden de vacaciones...">
+    </mat-form-field>
+    <mat-form-field class="mat-form-container" appearance="outline" color="accent">
+        <mat-label>Escriba su mensaje</mat-label>
+        <textarea matInput placeholder="Ej. Hola le escribo para..."></textarea>
+    </mat-form-field>
+    <button mat-raised-button [disabled]="emailField.invalid" (click)="sendMail()">Enviar</button>
+</form>

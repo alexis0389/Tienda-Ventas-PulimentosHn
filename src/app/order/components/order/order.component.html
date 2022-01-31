@@ -1,0 +1,184 @@
+<!--------------------------Lista de Productos------------------------------------------------------------>
+<mat-stepper>
+    <mat-step>
+        <form [formGroup]="firstFormGroup" (ngSubmit)="Payment($event)" class="cart-grid">
+            <ng-template matStepLabel><strong>Sus Productos</strong></ng-template>
+            <div *ngIf="(products$ | async) as products">
+                <p *ngIf="products!.length === 0">No hay productos</p>
+                <mat-card *ngFor="let product of (products | remove2products) as oneProduct" required>
+                    <div *ngIf="(1 | countingProducts: product: products) as count">
+                        <mat-card-header>
+                            <img mat-card-avatar class="avatar" [src]="image">
+                            <mat-card-title>{{ product.title }}</mat-card-title>
+                            <mat-card-subtitle>{{ product.price * count | currency:'L.' }}</mat-card-subtitle>
+                        </mat-card-header>
+                        <div class="crop-image">
+                            <img mat-card-image [src]="product.image">
+                        </div>
+                        <mat-card-actions>
+                            <div class="contador">
+                              <button mat-icon-button class="quantity-button" matTooltip="Quitar" color="primary" [disabled]="count === 1" (click)="deleteOneByOne(product.id)">
+                                  <mat-icon class="icon">remove_circle_outline</mat-icon>
+                              </button>
+                              <p class="numero"><strong>{{ 1 | countingProducts: product: products }}</strong></p>
+                              <button mat-icon-button class="quantity-button" matTooltip="Agregar" color="primary" (click)="addCart(product)">
+                                <mat-icon class="icon">add_circle_outline</mat-icon>
+                              </button>
+                            </div>
+                            <button mat-icon-button class="eliminar-producto" matTooltip="Eliminar Producto" color="warn" (click)="deleteFromCart(product.id)">
+                                <mat-icon class="icon-delete">delete_outline</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </div>
+                </mat-card>
+                <div *ngIf="products.length !== 0">
+                    <mat-divider></mat-divider>
+                    <h2>Total: {{ totalAmount() | currency:"L." }}</h2>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+<!---------------------------------Informacion Personal-------------------------------------------------------->
+    <mat-step>
+        <ng-template matStepLabel><strong>Datos Personales</strong></ng-template>
+        <form [formGroup]="firstFormGroup" (ngSubmit)="Payment($event)" class="Data">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="nombre">
+                        <mat-label>Nombre completo</mat-label>
+                        <input formControlName="name" matInput placeholder="Ej. Plutarco...">
+                        <mat-error *ngIf="Name!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="identidad">
+                        <mat-label>No. Identidad</mat-label>
+                        <input type="text" minlength="13" maxlength="13" formControlName="id" matInput placeholder="####-####-#####">
+                        <mat-error *ngIf="Id!.hasError('required')">Este campo es requerido</mat-error>
+                        <mat-error *ngIf="Id!.hasError('minLength')">Número de identidad invalido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="celular" floatLabel="always">
+                        <mat-label>No. Celular</mat-label>
+                        <span matPrefix>+504 &nbsp;</span>
+                        <input type="number" class="cel" formControlName="mobile" matInput placeholder="####-####" pattern="([3\8\9][]*){1}([0-9][-]*){3}([0-9]){4}">
+                        <mat-icon matSuffix>phone</mat-icon>
+                        <mat-error *ngIf="Mobile!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="depto">
+                        <mat-label>Departamento</mat-label>
+                        <mat-select [formControl]="validators" required>
+                            <mat-option *ngFor="let dept of depto" [value]="dept">{{dept.value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="muni">
+                        <mat-label>Municipio</mat-label>
+                        <input formControlName="town" matInput placeholder="Ej. San Pedro Sula...">
+                        <mat-error *ngIf="Town!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="envio" floatLabel="always">
+                        <mat-label>Costo Envio</mat-label>
+                        <input type="number" matInput class="rigth" [value]="validators.value?.amount" disabled>
+                        <span matPrefix>L.&nbsp;</span>
+                        <span matSuffix>.00</span>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="address">
+                        <mat-label>Dirección Exacta</mat-label>
+                        <textarea matInput formControlName="address" placeholder="Ej. Avenida Circunvalación..."></textarea>
+                        <mat-error *ngIf="Address!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="comment">
+                        <mat-label>Comentario</mat-label>
+                        <textarea matInput placeholder="Ej. Dejar en la puerta..."></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+<!-------------------------------------Pago--------------------------------------------------------->
+    <mat-step>
+        <ng-template matStepLabel><strong>Pago</strong></ng-template>
+        <form [formGroup]="firstFormGroup" (ngSubmit)="Payment($event)" class="Pay">
+            <div class="row">
+                <div class="col">
+                    <div class="express">
+                    <mat-form-field appearance="outline" class="numeroT">
+                        <mat-label>Número de tarjeta</mat-label>
+                        <input type="number" class="cardInput" matInput formControlName="cardNumber" placeholder="0000 0000 0000 0000">
+                        <mat-error *ngIf="CardNumber!.hasError('required')">Este campo es requerido</mat-error>
+                        <mat-error *ngIf="CardNumber!.hasError('pattern')">Número de tarjeta incorrecto</mat-error>
+                    </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <label>Fecha de Vencimiento</label>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field hintLabel="Búscala en el frente" appearance="outline" class="expiredM">
+                        <input type="number" matInput formControlName="expiredDateM" class="month" placeholder="MM">
+                        <mat-error *ngIf="ExpiredDateM!.hasError('required')">Este campo es requerido</mat-error>
+                        <mat-error *ngIf="ExpiredDateM!.hasError('max')">Ingresa un mes valido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <span class="barra"><strong>/</strong></span>
+                    <mat-form-field appearance="outline" class="expiredY">
+                        <input type="number" matInput formControlName="expiredDateY" class="year" placeholder="YY">
+                        <mat-error *ngIf="ExpiredDateY!.hasError('required')">Este campo es requerido</mat-error>
+                        <mat-error *ngIf="ExpiredDateY!.hasError('max')">Dato no mayor a 7 años</mat-error>
+                        <mat-error *ngIf="ExpiredDateY!.hasError('min')">Su tarjeta ya caduco</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field hintLabel="Búscala al reverso" appearance="outline" class="cvv">
+                        <mat-label>CVV/CVC</mat-label>
+                        <input type="number" matInput formControlName="cvv" placeholder="123">
+                        <mat-error *ngIf="CVV!.hasError('required')">Este campo es requerido</mat-error>
+                        <mat-error *ngIf="CVV!.hasError('max')">Asegurate de que sean 3 digitos</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field hintLabel="Tal como está impreso en la tarjeta" appearance="outline" class="titular">
+                        <mat-label>Nombre del titular</mat-label>
+                        <input matInput formControlName="cardName" placeholder="Ej. Plutarco Gomez...">
+                        <mat-error *ngIf="CardName!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"> 
+                    <mat-form-field appearance="outline" class="emailCard">
+                        <mat-label>Correo electronico</mat-label>
+                        <input type="email" matInput formControlName="email" placeholder="Ej. pat@ejemplo.com">
+                        <mat-error *ngIf="Email!.hasError('email')">Por favor ingrese un correo valido</mat-error>
+                        <mat-error *ngIf="Email!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row end-xs">
+                <div class="col-xs-12">
+                    <a class="cancelar" mat-button href="/products">Cancelar</a>
+                    <a class="pagar" href="/home" mat-raised-button color="primary" [disabled]="firstFormGroup.invalid"><strong>Pagar</strong></a>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+</mat-stepper>
+

@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap');
+
+* {
+    font-family: 'Merriweather', serif;
+}
+
+.info-container {
+    display: inline-block;
+    width: 40%;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px 30px;
+    padding: 5px;
+    box-sizing: border-box;
+    position: relative;
+    left: 30px;
+    top: -40px;
+}
+
+ul {
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.container {
+    display: inline-block;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 10px;
+    width: 45%;
+    padding: 5px;
+    position: relative;
+    top: -3px;
+    left: 40px;
+    border: 2px solid #3f3f3f;
+}
+
+.mat-form-container {
+    width: 100%;
+}
+
+.mat-form-container textarea {
+    min-height: 150px;
+    resize: none;
+}
+
+button {
+    width: 100%;
+    background: #0a750f;
+    color: white;
+    border-bottom: none;
+    transition: all .5s;
+}
+
+button:hover {
+    background: #0f9738;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
+    .info-container {
+        display: inline-block;
+        width: 80%;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 30px 10px 0 10px;
+        box-sizing: border-box;
+    }
+
+    .container {
+        display: inline-block;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        width: 85%;
+        padding: 5px;
+        border: 2px solid #3f3f3f;
+        margin-left: -15px;
+    }
+
+}

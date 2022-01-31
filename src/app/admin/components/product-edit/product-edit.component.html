@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="saveProduct($event)">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Producto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>TITLE</mat-label>
+                        <input formControlName="title" matInput type="text" placeholder="Ingrese nombre del producto">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>IMAGE</mat-label>
+                        <input formControlName="image" matInput type="text" placeholder="Ingrese una imagen">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>PRICE</mat-label>
+                        <input formControlName="price" matInput type="number" placeholder="Ingrese un precio">
+                    </mat-form-field>
+                    <mat-error *ngIf="priceField!.hasError('price_invalid')">Valor de producto muy elevado</mat-error>
+                    <mat-error *ngIf="priceField!.hasError('required')">El campo es requerido</mat-error>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field class="mat-item" appearance="fill">
+                        <mat-label>DESCRIPTION</mat-label>
+                        <textarea formControlName="description" matInput type="text" placeholder="Describa su producto"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Editar producto</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

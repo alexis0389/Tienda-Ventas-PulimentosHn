@@ -1,0 +1,34 @@
+* {
+    background: #3f3f3f;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-container {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+h4 {
+    position: relative;
+    top: 15px;
+}
+
+p b {
+    position: relative;
+    top: 0px;
+}
+
+a {
+    position: relative;
+    top: -10px;
+    margin: 0 4px;
+    transition: all 7s;
+}
+
+a:hover {
+    cursor: pointer;
+    border: 1px solid white;
+}

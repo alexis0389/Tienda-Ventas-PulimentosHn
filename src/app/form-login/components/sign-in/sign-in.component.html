@@ -1,0 +1,45 @@
+<form [formGroup]="formSignIn" (ngSubmit)="signIn($event)">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title><mat-icon>drive_file_rename_outline</mat-icon><strong>Sign In</strong></mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input formControlName="name" matInput placeholder="Ej. Plutarco...">
+                        <mat-error *ngIf="Name!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput placeholder="Ej. pat@ejemplo.com" [formControl]="emailSignIn">
+                        <mat-error *ngIf="Email!.hasError('email')">Correo Invalido</mat-error>
+                        <mat-error *ngIf="Email!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ingresa tu contraseña</mat-label>
+                        <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>
+                        <mat-icon matSuffix (click)="hide = !hide">
+                            {{hide ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
+                        <mat-error *ngIf="! Pass!.value">Ingrese su contraseña</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="formSignIn.invalid">Crear Cuenta</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>

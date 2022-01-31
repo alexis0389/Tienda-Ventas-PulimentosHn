@@ -1,0 +1,28 @@
+.crop-image {
+    display: block;
+    height: 300px;
+    width: 100%;
+  
+    img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+      object-position: center;
+    }
+}
+
+.product-detail-grid {
+    width: 32%;
+    padding-top: 103px;
+}
+
+mat-card-actions {
+  text-align: center;
+}
+
+@media screen and (max-width: 450px) {
+  .product-detail-grid {
+    width: 100%;
+    padding-top: 185px;
+  }
+}

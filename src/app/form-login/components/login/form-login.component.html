@@ -1,0 +1,43 @@
+<form [formGroup]="formLogin" (ngSubmit)="login($event)">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title><mat-icon>login</mat-icon><strong>Login</strong></mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input type="email" formControlName="email" matInput placeholder="Ej. pat@ejemplo.com" [formControl]="emailF">
+                        <mat-error *ngIf="User!.hasError('email')">Correo electronico invalido</mat-error>
+                        <mat-error *ngIf="User!.hasError('required')">Este campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ingresa tu contraseña</mat-label>
+                        <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>
+                        <mat-icon matSuffix (click)="hide = !hide">
+                            {{hide ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
+                        <mat-error *ngIf="! Pass!.value">Ingrese su contraseña</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="formLogin.invalid">Iniciar sesión</button>
+                </div>
+            </div>
+            <mat-card-footer>
+                <div class="row">
+                    <div class="colxs">
+                        <a routerLink="sign_in"><mat-icon>drive_file_rename_outline</mat-icon>Sign In?</a>
+                    </div>
+                </div>
+            </mat-card-footer>
+        </mat-card-content>
+    </mat-card>
+</form>

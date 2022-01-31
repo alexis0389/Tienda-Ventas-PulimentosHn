@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ productt.title | uppercase }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ today | date: 'longDate' }}</p>
+    </mat-card-content>
+    <div class="crop-image">
+        <img [src]="productt.image" alt="">
+    </div>
+    <mat-card-actions>
+        <a mat-raised-button [routerLink]="['/products', productt.id]" color="accent"><mat-icon>info</mat-icon>Ver Detalle</a>
+        <button (click)="addCart()" mat-raised-button color="primary"><mat-icon>add_shopping_cart</mat-icon>Agregar al carrito</button>
+    </mat-card-actions>
+</mat-card>
+

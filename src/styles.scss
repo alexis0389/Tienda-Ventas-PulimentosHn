@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@1,300&family=Roboto&display=swap');
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px 20px;
+    z-index: 90;
+}
+
+.container {
+    width: 100%;
+    padding: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 665px) {
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .container {
+        max-width: 1300px;
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+}
+html, body { 
+    height: 100%; 
+}
+body { 
+    margin: 0; 
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}

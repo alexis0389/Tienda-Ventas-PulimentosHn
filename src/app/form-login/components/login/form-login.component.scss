@@ -1,0 +1,48 @@
+form {
+    background: #3f3f3f;
+    height: 100%;
+}
+
+mat-card {
+    max-width: 400px;
+    padding: 20px;
+    position: relative;
+    top: 175px;
+    left: 455px;
+    text-align: center;
+    border: 4px solid green;
+}
+
+mat-card-header {
+    text-align:  center;
+    display: inline-block;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+button {
+    width: 75%;
+}
+
+mat-card-footer {
+    text-align: center;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+@media screen and (max-width: 450px) {
+    mat-card {
+        width: 300px;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        top: 175px;
+        left: 50px;
+    }
+}
